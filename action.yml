@@ -14,6 +14,12 @@ outputs:
   rootMountLocation:
     description: "Mount location of the /root partition"
     value: ${{ steps.mount-image.outputs.rootMountLocation }}
+  bootDeviceMapper:
+    description: "Boot mount device"
+    value: ${{ steps.mount-image.outputs.bootDeviceMapper }}
+  rootDeviceMapper:
+    description: "Root mount device"
+    value: ${{ steps.mount-image.outputs.rootDeviceMapper }} 
 runs:
   using: "composite"
   steps:
