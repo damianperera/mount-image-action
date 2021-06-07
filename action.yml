@@ -10,10 +10,10 @@ inputs:
 outputs:
   bootMountLocation:
     description: "Mount location of the /boot partition"
-    value: ${{ steps.mount-image.outputs.bootMountLocation }}
+    value: ${{ steps.mount-image.outputs.bootMountPoint }}
   rootMountLocation:
     description: "Mount location of the /root partition"
-    value: ${{ steps.mount-image.outputs.rootMountLocation }}
+    value: ${{ steps.mount-image.outputs.rootMountPoint }}
   bootDeviceMapper:
     description: "Boot mount device"
     value: ${{ steps.mount-image.outputs.bootDeviceMapper }}
