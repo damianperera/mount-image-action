@@ -1,0 +1,41 @@
+name: 'Mount an image'
+description: 'A custom action to mount an image inside a GitHub Actions workflow'
+inputs:
+  imagePath:
+    description: 'Absolute path of the image'
+    required: true
+  mountPoint:
+    description: 'Intended mount point - folder will be created'
+    required: true
+outputs:
+  bootMountLocation:
+    description: "Mount location of the /boot partition"
+    value: ${{ steps.mount-image.outputs.bootMountLocation }}
+  rootMountLocation:
+    description: "Mount location of the /root partition"
+    value: ${{ steps.mount-image.outputs.rootMountLocation }}
+runs:
+  using: "composite"
+  steps:
+    - id: mount-image
+      shell: bash
+      run: |
+       echo Attempting to mount ${{ inputs.imagePath }}
+       imagePath=${{ inputs.imagePath }}
+       mountPath=${{ mountPoint }}
+       kpartx="$(sudo kpartx -avs $imagePath)" || echo 1>&2 "ERROR: could not create loop devices for image"
+       blockDevices=($(grep -o 'loop.p.' <<<"$kpartx"))
+       sleep 0.5
+       boot=/dev/mapper/${blockDevices[0]}
+       root=/dev/mapper/${blockDevices[1]}
+       echo Attempting to mount boot to $boot and root to $root
+       sudo mkdir -p $mountPath || echo 1>&2 "ERROR: could not create the root partition's mount directory $mountPath"
+       sudo mount -t ext4 $root $mountPath || echo 1>&2 "ERROR: could not mount $root device to $mountPath"
+       sudo mkdir -p $mountPath/boot || echo 1>&2 "ERROR: could not create the boot partition's mount directory $mountPath/boot"
+       sudo mount -t vfat $boot $mountPath/boot || echo 1>&2 "ERROR: could not mount $boot device to $mountPath/boot"
+       echo "Mounted Image Details:"
+       df -h $mountPoint/boot $mountPoint | sed -e "s#$(pwd)/##" || echo 1>&2 "ERROR: could not inspect mounted partitions at $mountPoint and $mountPoint"
+       echo "::set-output name=bootDeviceMapper::${blockDevices[0]}"
+       echo "::set-output name=rootDeviceMapper::${blockDevices[1]}"
+       echo "::set-output name=bootMountPoint::${$mountPath/boot}"
+       echo "::set-output name=rootMountPoint::${$mountPoint}"
