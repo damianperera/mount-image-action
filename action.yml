@@ -49,4 +49,5 @@ runs:
        echo "::set-output name=bootDeviceMapper::/dev/mapper/${blockDevices[0]}"
        echo "::set-output name=rootDeviceMapper::/dev/mapper/${blockDevices[1]}"
        echo "::set-output name=bootMountLocation::${mountPath}/boot"
-       echo "::set-output name=rootMountLocation::${mountPoint}"
+       echo "::set-output name=rootMountLocation::${mountPath}"
+
