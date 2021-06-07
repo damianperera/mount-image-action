@@ -28,13 +28,14 @@ runs:
        sleep 0.5
        boot=/dev/mapper/${blockDevices[0]}
        root=/dev/mapper/${blockDevices[1]}
-       echo Attempting to mount boot to $boot and root to $root
+       echo Attempting to mount $boot to $mountPath/boot and $root to $mountPath
        sudo mkdir -p $mountPath || echo 1>&2 "ERROR: could not create the root partition's mount directory $mountPath"
        sudo mount -t ext4 $root $mountPath || echo 1>&2 "ERROR: could not mount $root device to $mountPath"
        sudo mkdir -p $mountPath/boot || echo 1>&2 "ERROR: could not create the boot partition's mount directory $mountPath/boot"
        sudo mount -t vfat $boot $mountPath/boot || echo 1>&2 "ERROR: could not mount $boot device to $mountPath/boot"
        echo "Mounted Image Details:"
        df -h $mountPath/boot $mountPath | sed -e "s#$(pwd)/##" || echo 1>&2 "ERROR: could not inspect mounted partitions at $mountPath and $mountPath"
+       echo Mounted Filesystem: && ls -la $mountPath
        echo "::set-output name=bootDeviceMapper::${blockDevices[0]}"
        echo "::set-output name=rootDeviceMapper::${blockDevices[1]}"
        echo "::set-output name=bootMountPoint::${mountPath}/boot"
