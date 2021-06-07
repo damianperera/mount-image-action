@@ -14,10 +14,10 @@ inputs:
 outputs:
   bootMountLocation:
     description: "Mount location of the /boot partition"
-    value: ${{ steps.mount-image.outputs.bootMountPoint }}
+    value: ${{ steps.mount-image.outputs.bootMountLocation }}
   rootMountLocation:
     description: "Mount location of the /root partition"
-    value: ${{ steps.mount-image.outputs.rootMountPoint }}
+    value: ${{ steps.mount-image.outputs.rootMountLocation }}
   bootDeviceMapper:
     description: "Boot mount device"
     value: ${{ steps.mount-image.outputs.bootDeviceMapper }}
@@ -48,5 +48,5 @@ runs:
        echo Mounted Filesystem: && ls -la $mountPath
        echo "::set-output name=bootDeviceMapper::/dev/mapper/${blockDevices[0]}"
        echo "::set-output name=rootDeviceMapper::/dev/mapper/${blockDevices[1]}"
-       echo "::set-output name=bootMountPoint::${mountPath}/boot"
-       echo "::set-output name=rootMountPoint::${mountPoint}"
+       echo "::set-output name=bootMountLocation::${mountPath}/boot"
+       echo "::set-output name=rootMountLocation::${mountPoint}"
