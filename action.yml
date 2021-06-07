@@ -42,7 +42,7 @@ runs:
        echo "Mounted Image Details:"
        df -h $mountPath/boot $mountPath | sed -e "s#$(pwd)/##" || echo 1>&2 "ERROR: could not inspect mounted partitions at $mountPath and $mountPath"
        echo Mounted Filesystem: && ls -la $mountPath
-       echo "::set-output name=bootDeviceMapper::${blockDevices[0]}"
-       echo "::set-output name=rootDeviceMapper::${blockDevices[1]}"
+       echo "::set-output name=bootDeviceMapper::/dev/mapper/${blockDevices[0]}"
+       echo "::set-output name=rootDeviceMapper::/dev/mapper/${blockDevices[1]}"
        echo "::set-output name=bootMountPoint::${mountPath}/boot"
        echo "::set-output name=rootMountPoint::${mountPoint}"
