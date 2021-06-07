@@ -1,5 +1,5 @@
-name: Mount an image's boot and root partitions
-description: A custom action to mount an image inside an Ubuntu runner
+name: Mount Image
+description: An action that mounts an image's boot and root partitions inside a Ubuntu runner.
 author: Damian Perera
 branding:
   icon: upload
