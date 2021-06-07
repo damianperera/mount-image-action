@@ -22,7 +22,7 @@ runs:
       run: |
        echo Attempting to mount ${{ inputs.imagePath }}
        imagePath=${{ inputs.imagePath }}
-       mountPath=${{ mountPoint }}
+       mountPath=${{ inputs.mountPoint }}
        kpartx="$(sudo kpartx -avs $imagePath)" || echo 1>&2 "ERROR: could not create loop devices for image"
        blockDevices=($(grep -o 'loop.p.' <<<"$kpartx"))
        sleep 0.5
