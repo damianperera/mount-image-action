@@ -1,5 +1,9 @@
-name: 'Mount an image'
-description: 'A custom action to mount an image inside a GitHub Actions workflow'
+name: Mount Image
+description: An action that mounts an image's boot and root partitions inside a Ubuntu runner.
+author: Damian Perera
+branding:
+  icon: upload
+  color: green
 inputs:
   imagePath:
     description: 'Absolute path of the image'
