@@ -4,11 +4,11 @@ An action that mounts an image's `boot` and `root` partitions inside a Ubuntu ru
 # Example
 ```
 - name: Mount Image
-      id: mount-image
-      uses: damianperera/mount-image-action@v1
-      with:
-        imagePath: /home/github-runner/rpi4.img
-        mountPoint: /mnt/rpi4
+  id: mount-image
+  uses: damianperera/mount-image-action@v1
+  with:
+    imagePath: /home/github-runner/rpi4.img
+    mountPoint: /mnt/rpi4
 ```
 For a usage example refer [this workflow file](https://github.com/damianperera/openwrt-rpi/blob/main/.github/workflows/build.yml).
 
